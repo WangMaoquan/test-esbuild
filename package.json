@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/esbuild src/index.jsx --bundle --outfile=dist/out.js",
-    "esbuild:build": "node build.js"
+    "esbuild:build": "node build.js",
+    "esbuild:transform": "node transform.js"
   },
   "keywords": [],
   "author": "",
