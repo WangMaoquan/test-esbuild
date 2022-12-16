@@ -1,4 +1,15 @@
-const { build, buildSync } = require('esbuild');
+const { build, buildSync, serve } = require('esbuild');
+
+/**
+ * serve
+ * 开启 serve 模式后，将在指定的端口和目录上搭建一个静态文件服务，这个服务器用原生 Go 语言实现，性能比 Nodejs 更高
+ * 类似 webpack-dev-server，所有的产物文件都默认不会写到磁盘，而是放在内存中，通过请求服务来访问
+ * 每次请求到来时，都会进行重新构建(rebuild)，永远返回新的产物
+ *
+ * 值得注意的是，触发 rebuild 的条件并不是代码改动，而是新的请求到来
+ *
+ * Serve API 只适合在开发阶段使用，不适用于生产环境。
+ */
 
 async function runBuild() {
   // 异步方法，返回一个 Promise
@@ -39,7 +50,27 @@ async function runBuild() {
       '.png': 'base64',
     },
   });
-  console.log(result);
+
+  // 测试 sever 代码
+  // serve(
+  //   {
+  //     port: 8000,
+  //     // 静态资源目录
+  //     servedir: './dist',
+  //   },
+  //   {
+  //     absWorkingDir: process.cwd(),
+  //     entryPoints: ['./src/index.jsx'],
+  //     bundle: true,
+  //     format: 'esm',
+  //     splitting: true,
+  //     sourcemap: true,
+  //     ignoreAnnotations: true,
+  //     metafile: true,
+  //   },
+  // ).then((server) => {
+  //   console.log('HTTP Server starts at port', server.port);
+  // });
 }
 
 runBuild();
